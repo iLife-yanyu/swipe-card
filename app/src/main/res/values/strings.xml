@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">基础开源框架</string>
+    <string name="skip">跳过</string>
+    <string name="boot_tip">启动页，正在启动...</string>
+</resources>

@@ -5,6 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 open class CommonViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
+    open fun dispatchFooter(adapter: CommonAdapter<T>, position: Int) {
+
+    }
+
     open fun dispatch(adapter: CommonAdapter<T>, data: T, position: Int) {
 
     }

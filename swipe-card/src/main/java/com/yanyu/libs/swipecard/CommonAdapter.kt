@@ -14,6 +14,8 @@ abstract class CommonAdapter<T>(
         open var dataList: ArrayList<T> = ArrayList(),
 ) : RecyclerView.Adapter<CommonViewHolder<T>>() {
 
+    var footerData: Any? = null
+    var headerData: Any? = null
     protected var viewGroup: ViewGroup? = null //add by zhangxutong 2016 08 05 ,for 点击事件为了兼容HeaderView FooterView 的Adapter
 
     var onItemClickListener: OnItemClickListener<T>? = null
@@ -59,7 +61,15 @@ abstract class CommonAdapter<T>(
         //add by zhangxutong 2016 08 05 begin 点击事件为了兼容HeaderView FooterView 的Adapter，所以在OnBindViewHolder里，其实性能没有onCreate好
         setListener(position, holder)
         //add by zhangxutong 2016 08 05 end
-        holder.dispatch(this, dataList[position], position)
+        if (position == 0 && headerData != null) {
+            holder.dispatchFooter(this, position)
+        }
+        else if (position == dataList.size && footerData != null) {
+            holder.dispatchFooter(this, position)
+        }
+        else {
+            holder.dispatch(this, dataList[position], position)
+        }
     }
 
     //add by zhangxutong 2016 08 05 begin 点击事件为了兼容HeaderView FooterView 的Adapter，所以在OnBindViewHolder里，其实性能没有onCreate好
@@ -78,7 +88,14 @@ abstract class CommonAdapter<T>(
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        var count = 0
+        if (footerData != null) {
+            count++
+        }
+        if (headerData != null) {
+            count++
+        }
+        return dataList.size + count
     }
 
     /**
